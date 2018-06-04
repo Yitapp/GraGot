@@ -29,7 +29,7 @@
                             <a href="<?= get_edit_post_link($post->ID) ?>" class="ajustes-post"><i class="fa fa-cog" aria-hidden="true"></i></a>
                         </a>
                         <hr>
-                        <?= substr(get_the_content(), 0, 600) ?>
+                        <?= htmlspecialchars(substr(get_the_content(), 0, 600)) ?>
                     </div>
                     <div class="card-footer" style="background-color: #FFF">
                         <small class="text-muted">Ultima actualizacion: <?= $post->post_modified ?></small>

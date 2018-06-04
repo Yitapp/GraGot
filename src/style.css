@@ -99,3 +99,12 @@ Version: 1.0
     margin-left: 15px;
 }
 
+#tree {
+    overflow: auto;
+    padding-bottom: 10px;
+}
+
+.contenedor-categorias {
+    font-size: 0.9em;
+    /*padding-bottom: 0;*/
+}

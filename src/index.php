@@ -17,20 +17,20 @@
 
 <div class="container-fluid">
     <div class="row">
-        <div class="col-4">
+        <div class="col-lg-4" style="margin-bottom: 20px">
 
 
                     <?php get_sidebar(); ?>
 
         </div>
 
-        <div class="col-8 ultimos-post-actualizados">
+        <div class="col-lg-8 ultimos-post-actualizados">
 
             <div class="card-deck">
                 <?php
                 $lastupdated_args = array(
                     'orderby' => 'modified',
-                    'posts_per_page' => 8
+                    'posts_per_page' => 4
                 );
                 $wpQuery = new WP_Query( $lastupdated_args );
 
@@ -40,16 +40,15 @@
                     ?>
                     <div class="tarjeta">
 
-                        <div class="card-body">
+                        <div class="card-header">
                             <a href="<?= get_post_permalink($post->ID) ?>">
                                 <h4 class="card-title" style="display: inline;"><?= $post->post_title ?></h4>
                                 <a href="<?= get_edit_post_link($post->ID) ?>" class="ajustes-post"><i class="fa fa-cog" aria-hidden="true"></i></a>
                             </a>
-                            <hr>
+                        </div>
 
+                        <div class="card-body">
                             <?php $categorias = get_the_category($post->ID);
-
-
 
                             foreach ($categorias as $categoria) { ?>
                                 <a href="#" class="badge badge-success" style="font-size: 18px;"><?= $categoria->name ?></a>

@@ -40,7 +40,7 @@ background-color: transparent;
         <div class="col-10">-->
             <div style="display: table-cell; width: 100%" >
                 <form style=" width: 100%" method="get" action="<?= get_home_url(); ?>">
-                    <input style="width: 100%" name="s" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" value="<?= $_GET['s'] ?>">
+                    <input style="width: 100%" name="s" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" value="<?= array_key_exists('s', $_GET) ? $_GET['s'] : '' ?>">
                 </form>
             </div>
         </div>

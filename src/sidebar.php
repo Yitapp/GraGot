@@ -1,29 +1,31 @@
 <div class="tarjeta" style="margin: 0">
     <div class="card-body contenedor-categorias">
 
-<select class="form-control">
-    <?php foreach (get_categories() as $categoria) {
-        if($categoria->parent == 0) {
-            ?> <option value="<?= $categoria->cat_ID ?>"><?= $categoria->name ?></option> <?php
-        }
-    } ?>
-</select>
+        <select class="form-control">
+            <?php foreach (get_categories() as $categoria) {
+                $categoriaActual = array_key_exists('categoriaActual', $_COOKIE) ? $_COOKIE['categoriaActual'] : 2; // La 2 es PHP
 
-<style>
-    #j1_1 {
-        padding-top: 10px;
-    }
-    .jstree-default .jstree-clicked {
-        box-shadow: none;
-    }
-</style>
+                if($categoria->parent == 0) {
+                    ?> <option <?= ($categoriaActual == $categoria->cat_ID) ? 'selected' : '' ?> value="<?= $categoria->cat_ID ?>"><?= $categoria->name ?></option> <?php
+                }
+            } ?>
+        </select>
 
-<div id="tree">
-    <?php
-        $categoria = array_key_exists('categoriaActual', $_COOKIE) ? $_COOKIE['categoriaActual'] : 9;
-        hierarchical_category_tree($categoria); // the function call; 0 for all categories; or cat ID
-    ?>
-</div>
+        <style>
+            #j1_1 {
+                padding-top: 10px;
+            }
+            .jstree-default .jstree-clicked {
+                box-shadow: none;
+            }
+        </style>
+
+        <div id="tree">
+            <?php
+                $categoria = array_key_exists('categoriaActual', $_COOKIE) ? $_COOKIE['categoriaActual'] : 2; // La 2 es PHP
+                hierarchical_category_tree($categoria); // the function call; 0 for all categories; or cat ID
+            ?>
+        </div>
 
     </div>
 </div>
@@ -37,6 +39,8 @@ function hierarchical_category_tree( $cat ) {
         'hide_empty' => 0,
         'parent' => $cat
     ]);
+
+
 
     $estadosPost = ['publish'];
     if(is_user_logged_in()) {
@@ -70,7 +74,7 @@ function hierarchical_category_tree( $cat ) {
 
                 ?>
                 <ul><li data-jstree='{"icon":"jstree-file"}'>
-                        <a href="<?= get_post_permalink($cat->ID) ?>" class="jstree-clicked"><?= $cat->post_title ?></a>
+                        <a href="<?= get_post_permalink($cat->ID) ?>" class=""><?= $cat->post_title ?></a>
                     </li></ul>
             <?php } ?>
 
@@ -87,15 +91,9 @@ function hierarchical_category_tree( $cat ) {
 
 <script>
 
-
     $('#tree').jstree({ "plugins" : ["themes","html_data","ui"] });
-
-
-
-
     $("#tree li").on("click", "a",
         function() {
-
             document.location.href = this;
         }
     );
