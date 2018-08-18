@@ -42,7 +42,7 @@
 
                         <div class="card-header">
                             <a href="<?= get_post_permalink($post->ID) ?>">
-                                <h4 class="card-title" style="display: inline;"><?= $post->post_title ?></h4>
+                                <h1 class="card-title" style="display: inline;"><?= $post->post_title ?></h1>
                                 <a href="<?= get_edit_post_link($post->ID) ?>" class="ajustes-post"><i class="fa fa-cog" aria-hidden="true"></i></a>
                             </a>
                         </div>
