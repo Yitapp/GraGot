@@ -1,35 +1,29 @@
-<div class="tarjeta" style="margin: 0">
-    <div class="card-body contenedor-categorias">
 
-        <select class="form-control">
-            <?php foreach (get_categories() as $categoria) {
-                $categoriaActual = array_key_exists('categoriaActual', $_COOKIE) ? $_COOKIE['categoriaActual'] : 2; // La 2 es PHP
+<select class="form-control">
+    <?php foreach (get_categories() as $categoria) {
+        $categoriaActual = array_key_exists('categoriaActual', $_COOKIE) ? $_COOKIE['categoriaActual'] : 2; // La 2 es PHP
 
-                if($categoria->parent == 0) {
-                    ?> <option <?= ($categoriaActual == $categoria->cat_ID) ? 'selected' : '' ?> value="<?= $categoria->cat_ID ?>"><?= $categoria->name ?></option> <?php
-                }
-            } ?>
-        </select>
+        if($categoria->parent == 0) {
+            ?> <option <?= ($categoriaActual == $categoria->cat_ID) ? 'selected' : '' ?> value="<?= $categoria->cat_ID ?>"><?= $categoria->name ?></option> <?php
+        }
+    } ?>
+</select>
 
-        <style>
-            #j1_1 {
-                padding-top: 10px;
-            }
-            .jstree-default .jstree-clicked {
-                box-shadow: none;
-            }
-        </style>
+<style>
+    #j1_1 {
+        padding-top: 10px;
+    }
+    .jstree-default .jstree-clicked {
+        box-shadow: none;
+    }
+</style>
 
-        <div id="tree">
-            <?php
-                $categoria = array_key_exists('categoriaActual', $_COOKIE) ? $_COOKIE['categoriaActual'] : 2; // La 2 es PHP
-                hierarchical_category_tree($categoria); // the function call; 0 for all categories; or cat ID
-            ?>
-        </div>
-
-    </div>
+<div id="tree">
+    <?php
+        $categoria = array_key_exists('categoriaActual', $_COOKIE) ? $_COOKIE['categoriaActual'] : 2; // La 2 es PHP
+        hierarchical_category_tree($categoria); // the function call; 0 for all categories; or cat ID
+    ?>
 </div>
-
 
 <?php
 
@@ -65,10 +59,11 @@ function hierarchical_category_tree( $cat ) {
     $opciones = array_merge($next, $query->posts );
 
     if( $opciones ) :
-        foreach( $opciones as $cat ) : ?>
+        foreach( $opciones as $cat ) :
+            ?>
             <?php if(isset($cat->count)) { ?>
-                <ul><li>
-                <?= $cat->name ?> (<?= $cat->count ?>)
+                <ul><li id="<?= $cat->cat_ID ?>">
+                <a href="<?= get_category_link($cat->cat_ID); ?>"><?= $cat->name ?> (<?= $cat->count ?>)</a>
                 <?php hierarchical_category_tree( $cat->term_id ); ?>
             <?php } else {
 
@@ -83,11 +78,22 @@ function hierarchical_category_tree( $cat ) {
     endif;
 
     ?> </li></ul> <?php
+
+}
+
+$categoriaParaDesplegar = 0;
+
+$post = get_post();
+$categoriaParaDesplegar = get_the_category($post->ID);
+$categoriaParaDesplegar = $categoriaParaDesplegar[0]->cat_ID;
+
+$page_object = get_queried_object();
+
+if($page_object != null && $page_object->cat_ID != '') {
+	$categoriaParaDesplegar = $page_object->cat_ID;
 }
 
 ?>
-
-
 
 <script>
 
@@ -97,5 +103,7 @@ function hierarchical_category_tree( $cat ) {
             document.location.href = this;
         }
     );
+    $("#tree").jstree('open_node', <?= $categoriaParaDesplegar ?>);
+    // $('#tree').jstree('open_all');
 
 </script>

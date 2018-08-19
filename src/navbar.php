@@ -46,4 +46,3 @@ background-color: transparent;
         </div>
     </div>
 </nav>
-<br>
