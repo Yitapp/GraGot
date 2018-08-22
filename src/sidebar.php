@@ -9,15 +9,6 @@
     } ?>
 </select>
 
-<style>
-    #j1_1 {
-        padding-top: 10px;
-    }
-    .jstree-default .jstree-clicked {
-        box-shadow: none;
-    }
-</style>
-
 <div id="tree">
     <?php
         $categoria = array_key_exists('categoriaActual', $_COOKIE) ? $_COOKIE['categoriaActual'] : 2; // La 2 es PHP
@@ -81,18 +72,18 @@ function hierarchical_category_tree( $cat ) {
 
 }
 
-$categoriaParaDesplegar = 0;
-
 $post = get_post();
-$categoriaParaDesplegar = get_the_category($post->ID);
-$categoriaParaDesplegar = $categoriaParaDesplegar[0]->cat_ID;
-
-$page_object = get_queried_object();
-
-if($page_object != null && $page_object->cat_ID != '') {
-	$categoriaParaDesplegar = $page_object->cat_ID;
+$idsCategoriasPadre = [];
+$categoriasDelPost = get_the_category($post->ID);
+foreach ($categoriasDelPost as $categoriaId) {
+	$categoriasPadre = get_category_parents($categoriaId);
+	$explode = explode('/', $categoriasPadre);
+	foreach ($explode as $catName) {
+	    if(!empty($catName)) {
+		    $idsCategoriasPadre[] = get_cat_ID($catName);
+        }
+    }
 }
-
 ?>
 
 <script>
@@ -103,7 +94,9 @@ if($page_object != null && $page_object->cat_ID != '') {
             document.location.href = this;
         }
     );
-    $("#tree").jstree('open_node', <?= $categoriaParaDesplegar ?>);
-    // $('#tree').jstree('open_all');
+
+    <?php foreach ($idsCategoriasPadre as $categoriaId) { ?>
+        $("#tree").jstree('open_node', <?= $categoriaId ?>);
+    <?php } ?>
 
 </script>

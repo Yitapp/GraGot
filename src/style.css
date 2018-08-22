@@ -125,3 +125,10 @@ body {
 #post {
     padding: 30px;
 }
+
+#j1_1 {
+    padding-top: 10px;
+}
+.jstree-default .jstree-clicked {
+    box-shadow: none;
+}
