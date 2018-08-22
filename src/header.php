@@ -28,7 +28,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css" />
 
     <style>
-        ul {
+        #sidebar ul {
             margin: 0;
         }
         #tree a {
