@@ -59,9 +59,11 @@ function hierarchical_category_tree( $cat ) {
             <?php } else {
 
                 ?>
-                <ul><li data-jstree='{"icon":"jstree-file"}'>
+                <ul>
+                    <li data-jstree='{"icon":"jstree-file"}'>
                         <a href="<?= get_post_permalink($cat->ID) ?>" class=""><?= $cat->post_title ?></a>
-                    </li></ul>
+                </li>
+                </ul>
             <?php } ?>
 
             <?php
@@ -84,6 +86,9 @@ foreach ($categoriasDelPost as $categoriaId) {
         }
     }
 }
+
+
+
 ?>
 
 <script>
